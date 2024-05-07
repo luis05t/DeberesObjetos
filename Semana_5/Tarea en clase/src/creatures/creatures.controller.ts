@@ -13,6 +13,14 @@ export class CreaturesController {
   create(@Body() createCreatureDto: CreateCreatureDto) {
     return this.creaturesService.create(createCreatureDto);
   }
+  @Get()
+  findAll(){
+    return this.creaturesService.findAll();
+  }
+  @Get('notextincts')
+  findAllnotExtincts (){
+    return this.creaturesService.findAllnotExtincts()
+     }
   @Get('extincts')
   findAllExtincts (){
     return this.creaturesService.findAllExtincts();

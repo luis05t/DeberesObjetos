@@ -12,7 +12,7 @@ export class CreaturesService {
   }
 
   findAll() {
-    return this.prisma.creature.findMany({where: { extinct: false} });
+    return this.prisma.creature.findMany();
   }
 
   findOne(id: number) {
@@ -32,5 +32,8 @@ export class CreaturesService {
   }
   findAllExtincts (){
     return this.prisma.creature.findMany({ where: { extinct: true} });
+  }
+  findAllnotExtincts (){
+    return this.prisma.creature.findMany({ where: { extinct: false} });
   }
 }
