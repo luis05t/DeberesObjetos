@@ -83,4 +83,121 @@ export class Matrix {
   }
 }
 ```
-## Link: https://youtu.be/ca09rJrHDyk
+# Ejercicio 14
+```typescript
+export class Robot {
+    private _name: string
+    public static _reservedNames: Set<string>
+    // Pregunta 1: ¿Qué propiedades tiene la clase `Robot`?
+    // Respuesta 1: La clase `Robot` tiene una propiedad privada `_name` que almacena el nombre del robot y una propiedad estática `_reservedNames` que almacena un conjunto de nombres reservados.
+
+    constructor() {
+        Robot._reservedNames = new Set()
+        this._name = this.generateName()
+        // Pregunta 2: ¿Qué hace el constructor de la clase `Robot`?
+        // Respuesta 2: El constructor inicializa `_reservedNames` como un nuevo conjunto y asigna a `_name` un nombre generado usando el método `generateName`.
+    }
+
+    public get name(): string {
+        return this._name
+        // Pregunta 3: ¿Cómo se obtiene el nombre de un robot?
+        // Respuesta 3: Se obtiene el nombre del robot mediante el getter público `name`, que devuelve el valor de `_name`.
+    }
+
+    generateName(): string {
+        let randomName: string
+        do {
+            randomName = this.randomName()
+            // Pregunta 4: ¿Qué hace el método `generateName`?
+            // Respuesta 4: El método `generateName` genera un nombre aleatorio utilizando el método `randomName` y se asegura de que no se repita en `_reservedNames`. Si el nombre ya existe, genera uno nuevo hasta que encuentra un nombre único y lo agrega a `_reservedNames`.
+        } while (Robot._reservedNames.has(randomName))
+        Robot._reservedNames.add(randomName)
+        return randomName
+    }
+
+    randomName(): string {
+        let name = '';
+        for (let i = 0; i < 2; i++) {
+            name += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 26)];
+        }
+        for (let i = 0; i < 3; i++) {
+            name += '0123456789'[Math.floor(Math.random() * 10)];
+        }
+        return name
+        // Pregunta 5: ¿Cómo se genera un nombre aleatorio en la clase `Robot`?
+        // Respuesta 5: El método `randomName` genera un nombre compuesto por dos letras mayúsculas seguidas de tres dígitos. Usa caracteres aleatorios de las cadenas 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' y '0123456789'.
+    }
+
+    public resetName(): void {
+        this._name = this.generateName()
+        // Pregunta 6: ¿Cómo se reinicia el nombre de un robot?
+        // Respuesta 6: El método `resetName` asigna un nuevo nombre generado por `generateName` a `_name`.
+    }
+
+    public static releaseNames() {
+        this._reservedNames.clear()
+        // Pregunta 7: ¿Cómo se liberan todos los nombres reservados?
+        // Respuesta 7: El método estático `releaseNames` limpia el conjunto `_reservedNames`, eliminando todos los nombres reservados.
+    }
+}
+
+// Pregunta 8: ¿Qué hace el conjunto `_reservedNames` en la clase `Robot`?
+// Respuesta 8: `_reservedNames` asegura que cada robot tenga un nombre único al almacenar todos los nombres generados y verificar que no se repitan.
+
+```
+# Ejercicio 15
+```typescript
+interface DB {
+    [key: number]: string[];
+}
+// Pregunta 1: ¿Qué es la interfaz `DB`?
+// Respuesta 1: La interfaz `DB` define un objeto donde las claves son números (representando grados) y los valores son arreglos de cadenas (nombres de estudiantes).
+
+export class GradeSchool {
+    _roster: DB = {}
+    // Pregunta 2: ¿Qué es `_roster` en la clase `GradeSchool`?
+    // Respuesta 2: `_roster` es una propiedad que almacena la base de datos de estudiantes, donde las claves son grados y los valores son arreglos de nombres de estudiantes.
+
+    roster() {
+        return JSON.parse(JSON.stringify(this._roster))
+        // Pregunta 3: ¿Qué hace el método `roster`?
+        // Respuesta 3: El método `roster` devuelve una copia profunda del objeto `_roster` para evitar modificaciones directas.
+    }
+
+    add(name: string, grade: number) {
+        this.deDupe(name)
+        // Pregunta 4: ¿Qué hace `this.deDupe(name)` en el método `add`?
+        // Respuesta 4: El método `deDupe` elimina el nombre del estudiante de cualquier otro grado antes de agregarlo al nuevo grado.
+        this._roster[grade] ?
+            this._roster[grade].push(name) : this._roster[grade] = [name]
+        // Pregunta 5: ¿Qué hace la línea `this._roster[grade].push(name)`?
+        // Respuesta 5: Si el grado ya existe en `_roster`, añade el nombre del estudiante al arreglo correspondiente.
+        // Pregunta 6: ¿Qué hace la línea `this._roster[grade] = [name]`?
+        // Respuesta 6: Si el grado no existe en `_roster`, crea un nuevo arreglo con el nombre del estudiante.
+        this._roster[grade].sort()
+        // Pregunta 7: ¿Por qué se ordenan los nombres después de agregar un nuevo estudiante?
+        // Respuesta 7: Para mantener los nombres de los estudiantes en orden alfabético dentro de cada grado.
+    }
+
+    grade(grade: number) {
+        return this.roster()[grade] ?? []
+        // Pregunta 8: ¿Qué hace el método `grade`?
+        // Respuesta 8: El método `grade` devuelve una copia del arreglo de nombres de estudiantes para el grado especificado, o un arreglo vacío si el grado no existe.
+    }
+
+    deDupe(name: string) {
+        for (let grade in this._roster) {
+            let names = this._roster[grade]
+            if (names.indexOf(name) != -1) {
+                names.splice(names.indexOf(name), 1)
+                break
+            }
+        }
+        // Pregunta 9: ¿Qué hace el método `deDupe`?
+        // Respuesta 9: El método `deDupe` elimina el nombre del estudiante de cualquier otro grado en el que ya esté registrado antes de agregarlo al nuevo grado.
+    }
+}
+
+```
+## Link: 12-13 https://youtu.be/zSwPHlykNWU
+## Link> 14-15 https://youtu.be/DliLQnizQbQ
