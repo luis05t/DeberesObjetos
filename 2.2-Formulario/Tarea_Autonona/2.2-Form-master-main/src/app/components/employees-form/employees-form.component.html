@@ -1,0 +1,29 @@
+<h1>Empresa</h1>
+
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Nombre</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input formControlName="firstName" placeholder="Coca-Cola" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Descipcion</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input formControlName="role" placeholder="Fabrica principal" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Año de funacion</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input formControlName="department" placeholder="2005" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 16, offset: 8 }">
+      <button nz-button nzType="primary">Submit</button>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>
